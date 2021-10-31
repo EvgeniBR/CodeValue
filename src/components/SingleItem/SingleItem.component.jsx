@@ -7,7 +7,7 @@ const SingleItem = ({
   handleDelete,
   openUpdateModal,
 }) => {
-  const [isClicked, setIsClicked] = React.useState(false);
+  const [isClicked] = React.useState(false);
 
   return (
     <div
