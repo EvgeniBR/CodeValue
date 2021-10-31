@@ -46,6 +46,18 @@ const ItemsList = () => {
     }
     //eslint-disable-next-line
   }, []);
+
+  React.useEffect(() => {
+    if(!isModalOpen){
+      let copy = [...items].map((u)=>{
+        u.selected = false;
+        return u
+      })
+      setItems(copy)
+      window.localStorage.setItem('storeItems', JSON.stringify(copy));
+    } 
+    //eslint-disable-next-line
+  }, [isModalOpen])
   
   const handleDelete = (id) => {
     const updatedItems = items.filter((item) => item.ID !== id);
@@ -55,10 +67,16 @@ const ItemsList = () => {
   };
 
   const openUpdateModal = (bool, id) => {
-    const objToUpdate = items.find((item) => item.ID === id);
-    // objToUpdate.selected = !objToUpdate.selected
-    setIsModalOpen(bool);
-    setObjectToUpdate(objToUpdate);
+    let copy = [...items].map((u)=>{
+      u.selected = false;
+      return u
+    })
+
+    let item = copy.find((item) => item.ID === id)
+    item.selected = !item.selected
+    setIsModalOpen(!bool);
+    setItems(copy)
+    setObjectToUpdate(item)
   };
 
   const handleChange = (event) => {
@@ -111,7 +129,7 @@ const ItemsList = () => {
           {getFilteredItems().map((item) => {
             return (
               <SingleItem
-                openUpdateModal={(bool, id)=>openUpdateModal(bool, id)}
+                openUpdateModal={openUpdateModal}
                 handleDelete={handleDelete}
                 key={item.ID}
                 data={item}
