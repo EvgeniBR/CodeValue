@@ -116,7 +116,7 @@ const ItemsList = () => {
         onClick={() => handleAddProduct()}
         className="add"
         type="button"
-        value="+ Add"
+        value="🛒 Add"
       />
       <input
         onChange={(e) => setSearchTerm(e.target.value)}
