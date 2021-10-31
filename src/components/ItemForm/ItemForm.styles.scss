@@ -1,0 +1,24 @@
+.modal-container {
+  width: 50vw;
+  margin: 5px;
+  height: 60vh;
+
+  fieldset {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+
+    img{
+      width: 170px;
+  height: 170px;
+    }
+  }
+
+  legend {
+    font-size: 2rem;
+  }
+  .save{
+    width: 100px;
+    align-self: flex-end;
+  }
+}

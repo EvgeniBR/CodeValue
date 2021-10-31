@@ -1,0 +1,40 @@
+.singleitem-container{
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid black;
+  width:50vw ;
+  padding: 15px;
+  margin: 5px;
+  position: relative;
+  .left-side{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .img-container img{
+    width: 170px;
+    height: 170px;
+  }
+  .name{
+    margin: 5px;
+    font-size: 2.5rem;
+  }
+  .description{
+    margin: 5px;
+    font-size: 1.5rem;
+  }
+
+  .btn-delete{
+    width: 85px;
+    margin: 5px;
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: 30px;
+    right: 5px;
+  }
+}
+
+.active{
+  background: lightblue;
+}

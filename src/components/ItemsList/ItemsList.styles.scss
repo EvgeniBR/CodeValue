@@ -1,0 +1,23 @@
+.add{
+  margin: 15px;
+  padding: 15px 30px;
+  font-size: 1.8rem;
+}
+.search{
+  padding: 15px 30px;
+  font-size: 1.8rem;
+  border-radius: 20px;
+}
+.main-container {
+  display: flex;
+  justify-content: space-between;
+
+  .itemslist-container {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+
