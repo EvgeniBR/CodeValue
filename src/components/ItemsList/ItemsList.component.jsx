@@ -39,10 +39,12 @@ const ItemsList = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-    if (JSON.parse(window.localStorage.getItem('storeItems'))) {
+    if (!JSON.parse(window.localStorage.getItem('storeItems'))) {
       setItems(JSON.parse(window.localStorage.getItem('storeItems')));
+
     } else {
       window.localStorage.setItem('storeItems', JSON.stringify(items));
+
     }
     //eslint-disable-next-line
   }, []);
@@ -59,14 +61,20 @@ const ItemsList = () => {
     //eslint-disable-next-line
   }, [isModalOpen])
   
-  const handleDelete = (id) => {
+  React.useEffect(() => {
+    window.localStorage.setItem('storeItems', JSON.stringify(items));
+  }, [items])
+  const handleDelete = (e,id) => {
+    e.stopPropagation()
     const updatedItems = items.filter((item) => item.ID !== id);
-    console.log(updatedItems);
-    setItems([...updatedItems]);
+    console.log('updatedItems:',updatedItems);
     window.localStorage.setItem('storeItems', JSON.stringify(updatedItems));
+    setItems(updatedItems);
+    console.log('items:',items)
   };
 
   const openUpdateModal = (bool, id) => {
+    
     let copy = [...items].map((u)=>{
       u.selected = false;
       return u
@@ -89,7 +97,7 @@ const ItemsList = () => {
     const updatedItems = items.filter((item) => item.ID !== objectToUpdate.ID);
     const itemsToUpdate = [...updatedItems, objectToUpdate];
     setItems(itemsToUpdate);
-    window.localStorage.setItem('storeItems', JSON.stringify(itemsToUpdate));
+    window.localStorage.setItem('storeItems', JSON.stringify(items));
     setIsModalOpen(false);
   };
 

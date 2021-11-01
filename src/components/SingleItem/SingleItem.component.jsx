@@ -30,7 +30,7 @@ const SingleItem = ({
       </div>
       <div className="right-side">
         <input
-          onClick={() => handleDelete(ID)}
+          onClick={(e) => handleDelete(e,ID)}
           className="btn-delete"
           type="button"
           value="🗑️"
