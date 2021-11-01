@@ -6,85 +6,86 @@ import Spinner from '../Spinner/Spinner.component';
 import './ItemsList.styles.scss';
 
 const ItemsList = () => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [objectToUpdate, setObjectToUpdate] = React.useState({});
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [items, setItems] = React.useState([
+  const [itemStorage] = React.useState([
     {
       ID: 0,
       Name: 'Coffee',
       Description: 'Best Coffee',
       Price: 119,
-      selected:false
+      selected: false,
     },
     {
       ID: 1,
       Name: 'Chocolate',
       Description: 'Best Chocolate',
       Price: 10,
-      selected:false
+      selected: false,
     },
     {
       ID: 2,
       Name: 'Sugar',
       Description: 'Best Sugar',
       Price: 5,
-      selected:false
+      selected: false,
     },
   ]);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [objectToUpdate, setObjectToUpdate] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [items, setItems] = React.useState([]);
 
   React.useEffect(() => {
     setIsLoading(true);
+
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-    if (!JSON.parse(window.localStorage.getItem('storeItems'))) {
-      setItems(JSON.parse(window.localStorage.getItem('storeItems')));
 
+    if (localStorage.getItem('storeItem')) {
+      if(JSON.parse(window.localStorage.getItem('storeItem')).length===0){
+        window.localStorage.setItem('storeItem', JSON.stringify(itemStorage))
+      }
+      setItems(JSON.parse(window.localStorage.getItem('storeItem')));
     } else {
-      window.localStorage.setItem('storeItems', JSON.stringify(items));
-
+      setItems(itemStorage);
+      window.localStorage.setItem('storeItem', JSON.stringify(itemStorage));
     }
     //eslint-disable-next-line
   }, []);
 
   React.useEffect(() => {
-    if(!isModalOpen){
-      let copy = [...items].map((u)=>{
+    if (!isModalOpen) {
+      let copy = [...items].map((u) => {
         u.selected = false;
-        return u
-      })
-      setItems(copy)
-      window.localStorage.setItem('storeItems', JSON.stringify(copy));
-    } 
+        return u;
+      });
+      if(copy.length > 0){
+        setItems(copy);
+        window.localStorage.setItem('storeItem', JSON.stringify(copy));
+      }
+    }
     //eslint-disable-next-line
-  }, [isModalOpen])
-  
-  React.useEffect(() => {
-    window.localStorage.setItem('storeItems', JSON.stringify(items));
-  }, [items])
-  const handleDelete = (e,id) => {
-    e.stopPropagation()
+  }, [isModalOpen]);
+
+  const handleDelete = (e, id) => {
+    e.stopPropagation();
     const updatedItems = items.filter((item) => item.ID !== id);
-    console.log('updatedItems:',updatedItems);
-    window.localStorage.setItem('storeItems', JSON.stringify(updatedItems));
+    window.localStorage.setItem('storeItem', JSON.stringify(updatedItems));
     setItems(updatedItems);
-    console.log('items:',items)
   };
 
   const openUpdateModal = (bool, id) => {
-    
-    let copy = [...items].map((u)=>{
+    let copy = [...items].map((u) => {
       u.selected = false;
-      return u
-    })
+      return u;
+    });
 
-    let item = copy.find((item) => item.ID === id)
-    item.selected = !item.selected
+    let item = copy.find((item) => item.ID === id);
+    item.selected = !item.selected;
     setIsModalOpen(!bool);
-    setItems(copy)
-    setObjectToUpdate(item)
+    setItems(copy);
+    setObjectToUpdate(item);
   };
 
   const handleChange = (event) => {
@@ -97,7 +98,7 @@ const ItemsList = () => {
     const updatedItems = items.filter((item) => item.ID !== objectToUpdate.ID);
     const itemsToUpdate = [...updatedItems, objectToUpdate];
     setItems(itemsToUpdate);
-    window.localStorage.setItem('storeItems', JSON.stringify(items));
+    window.localStorage.setItem('storeItem', JSON.stringify(itemsToUpdate));
     setIsModalOpen(false);
   };
 
@@ -107,7 +108,7 @@ const ItemsList = () => {
       Name: '',
       Description: '',
       Price: 0,
-      selected:false
+      selected: false,
     });
     setIsModalOpen(true);
   };
